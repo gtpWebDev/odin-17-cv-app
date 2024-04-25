@@ -1,35 +1,94 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+
+const initialCVDetails = {
+  personal: {
+    name: "Glen Pearson",
+    email: "glen@WebGLProgram",
+    phone: "010292901",
+  },
+  // education: {
+  //   name: "Glen Pearson2",
+  //   email: "glen@WebGLProgram 2",
+  //   phone: "010292901 2",
+  // },
+};
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [cvContent, setCvContent] = useState(initialCVDetails);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header>CV Application</header>
+      <InputArea cvContent={cvContent} />
+      <DisplayArea cvContent={cvContent} />
     </>
-  )
+  );
 }
 
-export default App
+const InputArea = ({ cvContent }) => {
+  return (
+    <aside>
+      <h1>Overall Input Area</h1>
+      <InputSection
+        name="personal"
+        initialSectionContent={cvContent.personal}
+      />
+      {/* <InputSection
+        name="education"
+        initialSectionContent={cvContent.education}
+      /> */}
+    </aside>
+  );
+};
+
+const InputSection = ({ name, initialSectionContent }) => {
+  const [sectionContent, setSectionContent] = useState(initialSectionContent);
+
+  // add function to update a section detail
+  // add an edit button
+  // add a submit button
+
+  return (
+    <aside>
+      <h1>Input Section</h1>
+      <p>Section name: {name}</p>
+      {/* <p>Part of data: {sectionContent.name}</p> */}
+      <InputDetail name="name" data={sectionContent.name} />
+      <InputDetail name="phone" data={sectionContent.phone} />
+    </aside>
+  );
+};
+
+const InputDetail = ({ name, data }) => {
+  // should be label and input filed with onchange a cbfn in InputSection
+
+  return (
+    <p>
+      {name}:{data}
+    </p>
+  );
+};
+
+const DisplayArea = ({ cvContent }) => {
+  return (
+    <main>
+      <h2>CV Display</h2>
+      <DisplaySection sectionData={cvContent.personal} />
+      <DisplaySection sectionData={cvContent.personal} />
+      <DisplaySection sectionData={cvContent.personal} />
+    </main>
+  );
+};
+
+const DisplaySection = ({ sectionData }) => {
+  return (
+    <>
+      <h3>Display Section Header</h3>
+      <p>{sectionData.name}</p>
+      <p>{sectionData.phone}</p>
+    </>
+  );
+};
+
+export default App;
